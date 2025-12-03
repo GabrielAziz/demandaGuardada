@@ -1,23 +1,16 @@
 import { Router } from 'express';
-import { createUserController, listUsersController} from '../controllers/user.controller.js';
+import { createUserController, listUsersController, deleteUserController, updateUserController, createAddressController } from '../controllers/user.controller.js';
 // import { ensureAuthenticated, ensureAdministrator, ensureAdministratorOrSelf } from '../middlewares/auth';
 
 const userRouter = Router();
-// const userController = new UserController();
 
+userRouter.get('/', listUsersController);
+userRouter.post('/', createUserController);
+userRouter.patch('/:user_cpf', updateUserController);
+userRouter.delete('/:user_cpf', deleteUserController);
 
-
-userRouter.post('/', createUserController)
-userRouter.get('/', listUsersController)
-
-
-
-// userRouter.use(ensureAuthenticated);
-
-// userRouter.get('/', ensureAdministrator, userController.findAll);                            // GET all users
-// userRouter.get('/:id', ensureAdministratorOrSelf, userController.findById);                  // GET single user
-// userRouter.post('/new', ensureAdministrator, userController.create);                         // CREATE user
-// userRouter.put('/edit/:id', ensureAdministratorOrSelf, userController.update);               // UPTADE user
-// userRouter.delete('/inactivate/:id', ensureAdministratorOrSelf, userController.softDelete);  // DELETE user
+// ADDRESS ROUTES
+userRouter.post('/:user_cpf', createAddressController);
+// userRouter.delete('/:user_cpf', removeAddressController);
 
 export default userRouter;

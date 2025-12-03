@@ -1,11 +1,16 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import routes from './routes/index.js'; // Importa as rotas (e não o controller direto)
 
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({
+  origin: process.env.FRONTEND_ORIGIN || true,
+  credentials: true,
+}));
 
 // Rota de verificação (Health Check)
 app.get('/healthcheck', (req, res) => {
@@ -23,5 +28,9 @@ app.listen(PORT, () => {
     Servidor rodando na porta ${PORT} 🚀
 
     http://localhos:${PORT}/healthcheck
+
+    Acesse o banco de dados via Prisma Studio:
+    $ npx prisma studio
+    Prisma Studio ira estar acessível em http://localhost:5555
   `);
 });
